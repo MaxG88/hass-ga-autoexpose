@@ -23,7 +23,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
 
         try:
             # Access the exposed entities manager
-            exposed_entities = hass.data.get("homeassistant.exposed_entites")
+            exposed_entities = hass.data.get("homeassistant.exposed_entities")
             entity_registry = async_get_entity_registry(hass)
 
             if not exposed_entities:
@@ -66,7 +66,8 @@ async def async_setup(hass: HomeAssistant, config: dict):
 
                 # Get registry entry for display name and aliases
                 registry_entry = entity_registry.async_get(entity_id)
-                aliases = list(registry_entry.aliases) if registry_entry and registry_entry.aliases else []
+                raw_aliases = getattr(registry_entry, "aliases", [])
+                aliases = [a for a in raw_aliases if isinstance(a, str)]
 
                 # Fetch all names
                 google_assistant_name = settings.get("name")
@@ -103,7 +104,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
             # Write the exposed entities to a YAML file using a thread-safe method
             def write_to_file():
                 with open(output_file, "w", encoding="utf-8") as file:
-                    yaml.dump(
+                    yaml.safe_dump(
                         exposed_entities_data,
                         file,
                         default_flow_style=False,
