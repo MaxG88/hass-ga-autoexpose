@@ -6,7 +6,7 @@ import logging
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import async_get as async_get_device_registry
 from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
-from homeassistant.const import CLOUD_NEVER_EXPOSED_ENTITIES
+"""from homeassistant.const import CLOUD_NEVER_EXPOSED_ENTITIES"""
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,15 +39,15 @@ async def async_setup(hass: HomeAssistant, config: dict):
             
             _LOGGER.debug("expose_by_default: %s", expose_by_default)
             _LOGGER.debug("exposed_domains: %s", exposed_domains)
-            _LOGGER.debug("CLOUD_NEVER_EXPOSED_ENTITIES: %s", CLOUD_NEVER_EXPOSED_ENTITIES)
+            """_LOGGER.debug("CLOUD_NEVER_EXPOSED_ENTITIES: %s", CLOUD_NEVER_EXPOSED_ENTITIES)"""
 
             # Process and structure the exposed entities
             exposed_entities_data = {}
             for entity_id, settings in assistant_settings.items():
 
-                if entity_id in CLOUD_NEVER_EXPOSED_ENTITIES:
+                """if entity_id in CLOUD_NEVER_EXPOSED_ENTITIES:
                     _LOGGER.debug("Skipping entity (never exposed): %s", entity_id)
-                    continue
+                    continue"""
 
                 # Check `should_expose` setting
                 if not settings.get("should_expose"):
